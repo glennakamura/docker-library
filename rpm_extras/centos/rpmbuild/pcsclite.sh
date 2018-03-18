@@ -12,5 +12,5 @@ build_pcsclite () {
   spectool -g -R ${spec}
   cp patches/pcsc-lite-*.patch ~/rpmbuild/SOURCES/
   rpmbuild -bb ${spec}
-  cp ${HOME}/rpmbuild/RPMS/x86_64/pcsc-lite-libs-*.rpm rpms/
+  cp ~/rpmbuild/RPMS/x86_64/pcsc-lite-libs-*.rpm rpms/
 }

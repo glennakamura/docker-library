@@ -33,14 +33,14 @@ build_packages+=(git)
 build_git () {
   local uri=https://kojipkgs.fedoraproject.org/packages/git/2.16.2/1.fc28/src
   local pkg=git-2.16.2-1.fc28.src.rpm
-  local spec=${HOME}/rpmbuild/SPECS/git.spec
+  local spec=~/rpmbuild/SPECS/git.spec
   curl -L -R -O ${uri}/${pkg}
   rpm -i ${pkg}
   sed -i -e 's|^make test|#make test|' ${spec}
   rpmbuild -bb ${spec}
-  cp ${HOME}/rpmbuild/RPMS/x86_64/git-2.*.rpm \
-     ${HOME}/rpmbuild/RPMS/x86_64/git-core-2.*.rpm \
-     ${HOME}/rpmbuild/RPMS/noarch/git-core-doc-2.*.rpm \
-     ${HOME}/rpmbuild/RPMS/noarch/perl-Git-2.*.rpm \
+  cp ~/rpmbuild/RPMS/x86_64/git-2.*.rpm \
+     ~/rpmbuild/RPMS/x86_64/git-core-2.*.rpm \
+     ~/rpmbuild/RPMS/noarch/git-core-doc-2.*.rpm \
+     ~/rpmbuild/RPMS/noarch/perl-Git-2.*.rpm \
     rpms/
 }
