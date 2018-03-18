@@ -1,0 +1,21 @@
+FROM centos:centos7
+
+WORKDIR /tmp
+RUN yum install -y openssh-server \
+    && ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' \
+    && sed -i -e 's|^\(HostKey.*ssh_host_e\)|#\1|' /etc/ssh/sshd_config \
+    && echo 'StreamLocalBindMask 0111' >>/etc/ssh/sshd_config \
+    && echo 'StreamLocalBindUnlink yes' >>/etc/ssh/sshd_config \
+    && groupadd -g 500 pcscd \
+    && useradd -u 500 -g pcscd pcscd \
+    && mkdir -p /var/run/docker-pcscd \
+    && chown pcscd:pcscd /var/run/docker-pcscd \
+    && yum update -y \
+    && yum clean all \
+    && rm -rf /tmp/*
+COPY --chown=pcscd:pcscd pcscd-key.pub /home/pcscd/.ssh/authorized_keys
+
+VOLUME /var/run/docker-pcscd
+EXPOSE 22
+
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]
