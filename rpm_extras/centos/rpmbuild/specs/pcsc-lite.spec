@@ -7,24 +7,12 @@ Summary:        PC/SC Lite smart card framework and applications
 Group:          System Environment/Daemons
 License:        BSD
 URL:            http://pcsclite.alioth.debian.org/
-Source0:        http://alioth.debian.org/download.php/%{upstream_build}/%{name}-%{version}.tar.bz2
-Patch0:         %{name}-1.4-docinst.patch
-Patch1:         %{name}-1.4.100-rpath64.patch
-Patch2:         %{name}-close_on_exec.patch
-Patch3:         %{name}-1.5-permissions.patch
-Patch4:         %{name}-1.5-unlock.patch
-Patch5:         %{name}-1.5.2-overflow.patch
-Patch6:         %{name}-1.5-init-fix.patch
-Patch7:         %{name}-CVE-2010-4531.patch
-Patch8:		%{name}-1.5.2-no_hang.patch
-Patch9:		%{name}-1.5.2-libusb-scheme.patch
-Patch10:	%{name}-1.5.2-free-property.patch
-Patch11:	%{name}-1.5.2-unlock_mutex.patch
-Patch12:	%{name}-1.5.2-clean_sockets.patch
-Patch13:	%{name}-1.5.2-silence-not-inserted-warnings.patch
+Source0:        https://alioth.debian.org/frs/download.php/file/4235/pcsc-lite-1.8.23.tar.bz2
+Patch0:         %{name}-1.5.2-compat.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
+BuildRequires:  libudev
 BuildRequires:  libusb-devel >= 0.1.7
 BuildRequires:  hal-devel
 BuildRequires:  doxygen
@@ -72,25 +60,13 @@ Group:          Documentation
 
 
 %prep
-%setup -q
-%patch0 -p0 -b .docinst
-%patch1 -p1 -b .rpath64
-%patch2 -p1 -b .close_on_exec
-%patch3 -p0 -b .permissions
-%patch4 -p0 -b .unlock
-%patch5 -p0 -b .overflow
-%patch6 -p0 -b .init-fix
-%patch7 -p0 -b .cve-2010-4531
-%patch8 -p0 -b .no_hang
-%patch9 -p1 -b .lib-usb-scheme
-%patch10 -p0 -b .free-property
-%patch11 -p0 -b .unlock_mutex
-%patch12 -p0 -b .clean_sockets
-%patch13 -p0 -b .silence
+%setup -q -n pcsc-lite-1.8.23
+%patch0 -p1 -b .compat
 
 %build
 %configure \
   --disable-dependency-tracking \
+  --disable-libsystemd \
   --disable-static \
   --enable-runpid=%{_localstatedir}/run/pcscd.pid \
   --enable-confdir=%{_sysconfdir} \
@@ -105,15 +81,18 @@ rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 
 install -dm 755 $RPM_BUILD_ROOT%{_libdir}/pcsc/drivers
+install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/reader.conf.d
 
 install -Dpm 755 etc/pcscd.init $RPM_BUILD_ROOT%{_initrddir}/pcscd
+install -Dpm 755 etc/update-reader.conf $RPM_BUILD_ROOT%{_sbindir}/
+install -Dpm 644 doc/update-reader.conf.8 $RPM_BUILD_ROOT%{_mandir}/man8/
 
 cat <<EOF > $RPM_BUILD_ROOT%{_sysconfdir}/reader.conf.d/README
 All *.conf files in this directory are merged into %{_sysconfdir}/reader.conf
 by %{_sbindir}/update-reader.conf.
 EOF
 
-rm $RPM_BUILD_ROOT{%{_sysconfdir}/reader.conf.d/reader.conf,%{_libdir}/lib*.la}
+rm $RPM_BUILD_ROOT%{_libdir}/lib*.la
 touch $RPM_BUILD_ROOT%{_sysconfdir}/reader.conf
 
 # formaticc doesn't exist any more, don't include the man page
@@ -156,6 +135,11 @@ fi
 %{_mandir}/man5/reader.conf.5*
 %{_mandir}/man8/pcscd.8*
 %{_mandir}/man8/update-reader.conf.8*
+%exclude %{_bindir}/pcsc-spy
+%exclude %{_libdir}/libpcscspy.*
+%exclude %{_datadir}/doc/pcsc-lite/README.DAEMON
+%exclude %{_datadir}/doc/pcsc-lite/README.polkit
+%exclude %{_mandir}/man1/pcsc-spy.1.gz
 
 %files libs
 %defattr(-,root,root,-)
@@ -173,6 +157,9 @@ fi
 
 
 %changelog
+* Sun Mar 18 2018  Glen Nakamura <glen@imodulo.com> - 1.5.2-16
+- build with 1.8.23 to update client/server protocol version.
+
 * Mon Nov 7 2016  Bob Relyea <rrelyea@redhat.com> - 1.5.2-16
 - silence card not inserted warnings in the log file unless debug is turned on.
 

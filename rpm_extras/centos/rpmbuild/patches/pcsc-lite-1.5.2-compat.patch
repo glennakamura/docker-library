@@ -1,0 +1,170 @@
+--- a/doc/update-reader.conf.8
++++ b/doc/update-reader.conf.8
+@@ -0,0 +1,32 @@
++.TH UPDATE-READER.CONF 8 "Oct 2006"
++.SH NAME
++update\-reader.conf \- (re)generate /etc/reader.conf
++.SH SYNOPSIS
++.B update\-reader.conf
++[force]
++.SH DESCRIPTION
++.B update\-reader.conf
++is a simple tool to manage
++.IR /etc/reader.conf .
++The PCSC daemon (pcscd) uses one configuration file for its
++configuration. This makes it hard for packages to dynamically add
++information about their own smart card reader drivers. To fix this
++.B
++update\-reader.conf
++has been introduced.
++.PP
++.B update-reader.conf
++attempts to fix this by generating the configuration file from seperate
++files which are located in
++.IR /etc/reader.conf.d/ .
++All files in that directory are assembled together to form
++.IR /etc/reader.conf .
++.SH "FILES"
++.B update\-reader.conf
++will only use files that match the following wildcard:
++.BR *.conf .
++.SH "SEE ALSO"
++.BR pcscd (1), reader.conf (5)
++.SH AUTHOR
++This manual page was written by Ludovic Rousseau
++<ludovic.rousseau@free.fr>.
+--- a/etc/pcscd.init
++++ b/etc/pcscd.init
+@@ -0,0 +1,87 @@
++#!/bin/sh
++#
++# pcscd        Starts the pcscd Daemon
++#
++# chkconfig:   345 27 88
++# description: The PC/SC smart card daemon is a resource manager for the \
++#              PC/SC lite and Musclecard frameworks.  It coordinates \
++#              communications with smart card readers, smart cards, and \
++#              cryptographic tokens that are connected to the system.
++#
++# processname: pcscd
++# config:      /etc/reader.conf
++#
++### BEGIN INIT INFO
++# Provides: pcscd
++# Required-Start: $local_fs $remote_fs $syslog
++# Required-Stop: $local_fs $remote_fs $syslog
++# Should-Start: udev haldaemon openct
++# Should-Stop: udev haldaemon openct
++# Default-Start: 3 4 5
++# Default-Stop: 0 1 6
++# Short-Description: Daemon to access a smart card using PC/SC
++# Description: The PC/SC smart card daemon is a resource manager for the
++#              PC/SC lite and Musclecard frameworks.  It coordinates
++#              communications with smart card readers, smart cards, and
++#              cryptographic tokens that are connected to the system.
++### END INIT INFO
++#
++# Note!  pcscd should be started after pcmcia, and shut down before it
++# for smooth experience with PCMCIA readers.
++
++. /etc/init.d/functions
++
++umask 077
++
++exec=/usr/sbin/pcscd
++prog=$(basename $exec)
++lockfile=/var/lock/subsys/$prog
++socket=/var/run/pcscd.comm
++mapfile=/var/run/pcscd.pub
++PCSCD_OPTIONS=
++
++# Source config
++if [ -f /etc/sysconfig/pcscd ] ; then
++    . /etc/sysconfig/pcscd
++fi
++
++start() {
++    echo -n $"Starting PC/SC smart card daemon ($prog): "
++    /usr/sbin/update-reader.conf && daemon $prog $PCSCD_OPTIONS
++    retval=$?
++    echo
++    [ $retval -eq 0 ] && touch $lockfile
++    return $retval
++}
++stop() {
++    echo -n $"Stopping PC/SC smart card daemon ($prog): "
++    killproc $prog
++    retval=$?
++    echo
++    [ $retval -eq 0 ] && rm -f $lockfile
++    rm -f $socket $mapfile
++    return $retval
++}
++restart() {
++    stop
++    start
++}
++
++
++case "$1" in
++    start|stop|restart)
++        $1
++        ;;
++    reload|force-reload)
++        restart
++        ;;
++    status)
++        status $prog
++        ;;
++    condrestart|try-restart)
++        [ ! -f $lockfile ] || restart
++        ;;
++    *)
++        echo $"Usage: $0 {start|stop|status|restart|try-restart|reload|force-reload}"
++        exit 2
++esac
+--- a/etc/update-reader.conf
++++ b/etc/update-reader.conf
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++# Merge all reader config file snippets for pcsc-lite from a reader.conf.d
++# directory into a reader.conf.
++
++CONF=/etc/reader.conf
++CONFDIR=/etc/reader.conf.d
++
++umask 0022
++set -e
++
++trap cleanup EXIT
++cleanup()
++{
++    test -z "$tmpfile" || rm -f "$tmpfile"
++}
++
++tmpfile=`mktemp /tmp/reader.conf.XXXXXX`
++
++cat > "$tmpfile" << EOF
++# Configuration file for pcsc-lite
++#
++# Don't modify this file. Instead put a file or modify the files in
++# /etc/reader.conf.d/ and run /usr/sbin/update-reader.conf
++# afterwards.  Note that when starting pcscd with the init script,
++# update-reader.conf will be run automatically.
++#
++# Note also that this file should include configuration for serial and PCMCIA
++# readers only; USB readers should _not_ be configured here.
++
++EOF
++
++for f in `ls -1d "$CONFDIR"/*.conf 2>/dev/null` ; do
++    echo "# $f" >> "$tmpfile"
++    cat "$f" >> "$tmpfile"
++    echo >> "$tmpfile"
++done
++
++echo "# End of file" >> "$tmpfile"
++
++cat "$tmpfile" > "$CONF"
++
