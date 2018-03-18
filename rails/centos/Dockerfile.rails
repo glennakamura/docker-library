@@ -1,0 +1,7 @@
+FROM centos:centos6
+
+WORKDIR /tmp
+COPY rails.sh .
+RUN ./rails.sh && rm -rf /tmp/*
+
+VOLUME /home
