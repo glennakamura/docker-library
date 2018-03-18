@@ -1,5 +1,6 @@
 #!/bin/bash
 source git.sh
+source tmux.sh
 
 install_devtools () {
   yum install -y epel-release
