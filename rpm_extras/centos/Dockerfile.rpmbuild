@@ -1,0 +1,9 @@
+FROM centos:centos6 AS rpmbuild
+
+WORKDIR /tmp
+COPY rpmbuild .
+RUN ./build.sh
+
+FROM scratch
+
+COPY --from=rpmbuild /tmp/rpms /rpms
