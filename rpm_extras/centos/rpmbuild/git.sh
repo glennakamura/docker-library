@@ -1,7 +1,9 @@
 #!/bin/bash
-centos6_dependencies+=(
-  acl
+build_dependencies+=(
+  ${centos6:+acl}
   asciidoc
+  ${centos7:+bash-completion}
+  ${centos7:+cvs}
   cvsps
   desktop-file-utils
   emacs
@@ -9,17 +11,20 @@ centos6_dependencies+=(
   highlight
   httpd
   libcurl-devel
+  ${centos7:+libsecret-devel}
   mod_dav_svn
   openssl-devel
   pcre2-devel
   perl-CGI
   perl-DBD-SQLite
+  ${centos7:+perl-Digest-MD5}
   perl-ExtUtils-MakeMaker
+  ${centos7:+perl-HTTP-Date}
   perl-IO-Tty
   perl-MailTools
-  perl-Test-Harness
+  ${centos6:+perl-Test-Harness}
   perl-Test-Simple
-  perl-Time-HiRes
+  ${centos6:+perl-Time-HiRes}
   python2-devel
   subversion-perl
   tcl

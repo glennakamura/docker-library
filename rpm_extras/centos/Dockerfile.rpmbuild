@@ -1,9 +1,20 @@
-FROM centos:centos6 AS rpmbuild
+ARG target=centos6
+FROM centos:${target} AS stage1
+
+ARG target
+ENV TARGET=${target}
 
 WORKDIR /tmp
-COPY rpmbuild .
+RUN yum install -y epel-release \
+    && yum groupinstall -y 'Development Tools' \
+    && useradd rpmbuild \
+    && useradd mockbuild
+
+FROM stage1 AS stage2
+
+COPY --chown=rpmbuild rpmbuild .
 RUN ./build.sh
 
 FROM scratch
 
-COPY --from=rpmbuild /tmp/rpms /rpms
+COPY --from=stage2 /tmp/rpms /rpms

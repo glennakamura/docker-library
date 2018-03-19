@@ -1,11 +1,13 @@
 #!/bin/bash
-centos6_dependencies+=(
-  hal-devel
-  libudev-devel
-  libusb-devel
-  rpmdevtools
-)
-build_packages+=(pcsclite)
+if ${build_centos6}; then
+  build_dependencies+=(
+    hal-devel
+    libudev-devel
+    libusb-devel
+    rpmdevtools
+  )
+  build_packages+=(pcsclite)
+fi
 
 build_pcsclite () {
   local spec=specs/pcsc-lite.spec
