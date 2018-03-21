@@ -26,6 +26,7 @@ build_rpms () {
 }
 
 if [ ${UID} = 0 ]; then
+  build_centos7 && sed -i -e 's|\.el7\.centos|.el7|' /etc/rpm/macros.dist
   install_dependencies
   su - rpmbuild -c "cd $(pwd) && $0 $*"
 else
