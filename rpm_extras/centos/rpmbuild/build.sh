@@ -1,7 +1,11 @@
 #!/bin/bash
-case ${TARGET} in
-  centos?) eval ${TARGET}=true ;; # centos6=true or centos7=true
-esac
+build_target=centos6
+for argument in "$@"; do
+  case "${argument}" in
+    --target=centos[67]) build_target=${argument#*=} ;;
+  esac
+done
+eval ${build_target}=true  # centos6=true or centos7=true
 build_centos6=${centos6:-false}
 build_centos7=${centos7:-false}
 
@@ -23,7 +27,7 @@ build_rpms () {
 
 if [ ${UID} = 0 ]; then
   install_dependencies
-  su - rpmbuild -c "cd $(pwd) && TARGET=${TARGET} $0"
+  su - rpmbuild -c "cd $(pwd) && $0 $*"
 else
   build_rpms
 fi

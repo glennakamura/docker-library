@@ -1,9 +1,6 @@
 ARG target=centos6
 FROM centos:${target} AS stage1
 
-ARG target
-ENV TARGET=${target}
-
 WORKDIR /tmp
 RUN yum install -y epel-release \
     && yum groupinstall -y 'Development Tools' \
@@ -12,8 +9,9 @@ RUN yum install -y epel-release \
 
 FROM stage1 AS stage2
 
-COPY --chown=rpmbuild rpmbuild .
-RUN ./build.sh
+ARG target
+COPY --chown=rpmbuild:rpmbuild rpmbuild .
+RUN ./build.sh --target=${target}
 
 FROM scratch
 
