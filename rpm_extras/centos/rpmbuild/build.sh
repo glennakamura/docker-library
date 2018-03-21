@@ -6,8 +6,8 @@ for argument in "$@"; do
   esac
 done
 eval ${build_target}=true  # centos6=true or centos7=true
-build_centos6=${centos6:-false}
-build_centos7=${centos7:-false}
+build_centos6 () { ${centos6:-false}; }
+build_centos7 () { ${centos7:-false}; }
 
 source git.sh
 source pcsclite.sh

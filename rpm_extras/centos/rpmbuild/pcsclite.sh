@@ -1,5 +1,5 @@
 #!/bin/bash
-if ${build_centos6}; then
+if build_centos6; then
   build_dependencies+=(
     hal-devel
     libudev-devel
