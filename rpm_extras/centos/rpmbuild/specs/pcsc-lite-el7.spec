@@ -8,9 +8,7 @@ Summary:        PC/SC Lite smart card framework and applications
 Group:          System Environment/Daemons
 License:        BSD
 URL:            http://pcsclite.alioth.debian.org/
-Source0:        http://alioth.debian.org/download.php/%{upstream_build}/%{name}-%{version}.tar.bz2
-Patch1:		pcsc-lite-1.8.8-man-update.patch
-Patch2:		pcsc-lite-1.8.8-maxreaders.patch
+Source0:        https://alioth.debian.org/frs/download.php/file/4235/pcsc-lite-1.8.23.tar.bz2
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz
@@ -58,9 +56,7 @@ Requires:       %{name}-libs = %{version}-%{release}
 
 
 %prep
-%setup -q
-%patch1 -p 0 -b .man-update
-%patch2 -p 0 -b .maxreaders
+%setup -q -n pcsc-lite-1.8.23
 
 # Convert to utf-8
 for file in ChangeLog; do
@@ -92,6 +88,7 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 # Remove documentation installed in a wrong directory
 rm $RPM_BUILD_ROOT%{_docdir}/pcsc-lite/README.DAEMON
+rm $RPM_BUILD_ROOT%{_docdir}/pcsc-lite/README.polkit
 
 
 %post
@@ -137,6 +134,9 @@ rm $RPM_BUILD_ROOT%{_docdir}/pcsc-lite/README.DAEMON
 
 
 %changelog
+* Tue Mar 20 2018 Glen Nakamura <glen@imodulo.com> - 1.8.8-6
+- Build with 1.8.23 to update client/server protocol version
+
 * Mon Jul 6 2015 Robert Relyea <rrelyea@redhat.com> - 1.8.8-6
 - Increase the number of supported readers
 
