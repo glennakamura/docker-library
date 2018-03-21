@@ -1,8 +1,6 @@
 #!/bin/bash
-${build_centos6} && tmux_libevent_devel=libevent2-devel
-
 build_dependencies+=(
-  ${tmux_libevent_devel:=libevent-devel}
+  libevent${centos6:+2}-devel
   libutempter-devel
   ncurses-devel
 )
@@ -14,7 +12,7 @@ build_tmux () {
   local spec=~/rpmbuild/SPECS/tmux.spec
   curl -L -R -O ${uri}/${pkg}
   rpm -i ${pkg}
-  sed -i -e "s|libevent-devel|${tmux_libevent_devel}|" ${spec}
+  sed -i -e "s|libevent-devel|libevent${centos6:+2}-devel|" ${spec}
   rpmbuild -bb ${spec}
   cp ~/rpmbuild/RPMS/x86_64/tmux-2.*.rpm rpms/
 }
