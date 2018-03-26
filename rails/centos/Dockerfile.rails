@@ -1,7 +1,12 @@
-FROM centos:centos6
+ARG target=centos6
+FROM centos:${target}
+
+ARG target
+ARG user=rails
 
 WORKDIR /tmp
-COPY rails.sh .
-RUN ./rails.sh && rm -rf /tmp/*
+COPY rails .
+RUN ./build.sh --target=${target} --user=${user}
 
-VOLUME /home
+WORKDIR /root
+ENTRYPOINT ["/root/entrypoint.sh"]
