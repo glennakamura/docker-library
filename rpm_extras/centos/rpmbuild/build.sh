@@ -11,6 +11,7 @@ build_centos7 () { ${centos7:-false}; }
 
 source git.sh
 source pcsclite.sh
+source redis.sh
 source tmux.sh
 
 install_dependencies () {
