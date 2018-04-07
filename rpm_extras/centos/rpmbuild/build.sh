@@ -9,6 +9,8 @@ eval ${build_target}=true  # centos6=true or centos7=true
 build_centos6 () { ${centos6:-false}; }
 build_centos7 () { ${centos7:-false}; }
 
+build_dependencies=(sudo)
+
 source git.sh
 source pcsclite.sh
 source redis.sh
@@ -29,6 +31,7 @@ build_rpms () {
 if [ ${UID} = 0 ]; then
   build_centos7 && sed -i -e 's|\.el7\.centos|.el7|' /etc/rpm/macros.dist
   install_dependencies
+  echo 'rpmbuild ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/rpmbuild
   su - rpmbuild -c "cd $(pwd) && $0 $*"
 else
   build_rpms
