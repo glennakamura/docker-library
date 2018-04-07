@@ -12,6 +12,7 @@ build_centos7 () { ${centos7:-false}; }
 build_dependencies=(sudo)
 
 source git.sh
+source gnupg_pkcs11_scd.sh
 source pcsclite.sh
 source redis.sh
 source tmux.sh
