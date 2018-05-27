@@ -1,0 +1,15 @@
+FROM golang:alpine AS stage1
+
+WORKDIR /go/src
+RUN apk update \
+    && apk add git \
+    && git clone https://github.com/glennakamura/yumcache.git
+WORKDIR /go/bin
+RUN CGO_ENABLED=0 go build -ldflags='-s -w' yumcache
+
+FROM scratch
+
+COPY --from=stage1 /go/bin/yumcache /sbin/yumcache
+VOLUME /var/cache/yumcache
+
+ENTRYPOINT ["/sbin/yumcache"]
