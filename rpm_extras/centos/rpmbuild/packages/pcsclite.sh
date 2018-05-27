@@ -1,4 +1,6 @@
 #!/bin/bash
+build_package pcsclite || return 0
+
 build_dependencies+=(
   ${centos7:+graphviz}
   ${centos6:+hal-devel}
@@ -7,7 +9,6 @@ build_dependencies+=(
   rpmdevtools
   ${centos7:+systemd-devel}
 )
-build_packages+=(pcsclite)
 
 build_pcsclite () {
   local spec=specs/pcsc-lite${centos7:+-el7}.spec

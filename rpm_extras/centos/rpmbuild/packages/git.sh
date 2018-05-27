@@ -1,4 +1,6 @@
 #!/bin/bash
+build_package git || return 0
+
 build_dependencies+=(
   ${centos6:+acl}
   asciidoc
@@ -33,7 +35,6 @@ build_dependencies+=(
   xmlto
   zlib-devel
 )
-build_packages+=(git)
 
 build_git () {
   local uri=https://kojipkgs.fedoraproject.org/packages/git/2.16.2/1.fc28/src

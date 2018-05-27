@@ -11,11 +11,28 @@ build_centos7 () { ${centos7:-false}; }
 
 build_dependencies=(sudo)
 
-source git.sh
-source gnupg_pkcs11_scd.sh
-source pcsclite.sh
-source redis.sh
-source tmux.sh
+build_package_dependencies () {
+  local pkg
+  for pkg in "$@"; do
+    [ -f "packages/${pkg}.sh" ] && source "packages/${pkg}.sh"
+  done
+}
+
+build_package () {
+  local pkg
+  for pkg in "${build_packages[@]}"; do
+    [ "${pkg}" = "$1" ] && return 1
+  done
+  build_packages+=("$1")
+}
+
+source_packages () {
+  local pkg
+  for pkg in packages/*.sh; do
+    source "${pkg}"
+  done
+}
+source_packages
 
 install_dependencies () {
   yum install -y "${build_dependencies[@]}"
@@ -23,6 +40,7 @@ install_dependencies () {
 }
 
 build_rpms () {
+  local pkg
   mkdir rpms
   for pkg in "${build_packages[@]}"; do
     build_${pkg}

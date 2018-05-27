@@ -1,5 +1,6 @@
 #!/bin/bash
-build_centos6 && source libassuan.sh
+build_package_dependencies libassuan
+build_package gnupg_pkcs11_scd || return 0
 
 build_dependencies+=(
   ${centos7:+libassuan-devel}
@@ -7,7 +8,6 @@ build_dependencies+=(
   openssl-devel
   pkcs11-helper-devel
 )
-build_packages+=(gnupg_pkcs11_scd)
 
 build_gnupg_pkcs11_scd () {
   local uri=https://kojipkgs.fedoraproject.org/packages/gnupg-pkcs11-scd/0.9.1/3.fc28/src

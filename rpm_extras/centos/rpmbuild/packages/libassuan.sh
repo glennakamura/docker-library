@@ -1,7 +1,7 @@
 #!/bin/bash
-source libgpg_error.sh
-
-build_packages+=(libassuan)
+build_centos6 || return 0
+build_package_dependencies libgpg_error
+build_package libassuan || return 0
 
 build_libassuan () {
   local uri=https://kojipkgs.fedoraproject.org/packages/libassuan/2.5.1/3.fc28/src
