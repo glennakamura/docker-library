@@ -48,8 +48,8 @@ build_rpms () {
 }
 
 if [ ${UID} = 0 ]; then
-  build_centos7 && sed -i -e 's|\.el7\.centos|.el7|' /etc/rpm/macros.dist
   install_dependencies
+  build_centos7 && sed -i -e 's|\.el7\.centos|.el7|' /etc/rpm/macros.dist
   echo 'rpmbuild ALL=(ALL) NOPASSWD: ALL' >/etc/sudoers.d/rpmbuild
   su - rpmbuild -c "cd $(pwd) && $0 $*"
 else

@@ -2,7 +2,7 @@
 
 Name:           pcsc-lite
 Version:        1.8.8
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        PC/SC Lite smart card framework and applications
 
 Group:          System Environment/Daemons
@@ -12,7 +12,7 @@ Source0:        https://pcsclite.apdu.fr/files/pcsc-lite-1.8.23.tar.bz2
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz
-BuildRequires:  systemd-devel
+BuildRequires:  systemd-devel >= 187
 BuildRequires:  /usr/bin/pod2man
 
 Requires(post): systemd
@@ -134,8 +134,12 @@ rm $RPM_BUILD_ROOT%{_docdir}/pcsc-lite/README.polkit
 
 
 %changelog
-* Tue Mar 20 2018 Glen Nakamura <glen@imodulo.com> - 1.8.8-6
+* Tue Mar 20 2018 Glen Nakamura <glen@imodulo.com> - 1.8.8-7
 - Build with 1.8.23 to update client/server protocol version
+
+* Mon Oct 30 2017 Robert Relyea <rrelyea@redhat.com> - 1.8.8-7
+- Don't hang if the daemon is blocked by systemd
+- Make sure we have a new enough systemd-devel to have the udev headers
 
 * Mon Jul 6 2015 Robert Relyea <rrelyea@redhat.com> - 1.8.8-6
 - Increase the number of supported readers
