@@ -7,8 +7,8 @@ Summary:        PC/SC Lite smart card framework and applications
 
 Group:          System Environment/Daemons
 License:        BSD
-URL:            http://pcsclite.alioth.debian.org/
-Source0:        https://alioth.debian.org/frs/download.php/file/4235/pcsc-lite-1.8.23.tar.bz2
+URL:            https://pcsclite.apdu.fr/
+Source0:        https://pcsclite.apdu.fr/files/pcsc-lite-1.8.23.tar.bz2
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz
