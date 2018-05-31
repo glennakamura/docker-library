@@ -9,6 +9,7 @@ RUN CGO_ENABLED=0 go build -ldflags='-s -w' yumcache
 
 FROM scratch
 
+COPY --from=stage1 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=stage1 /go/bin/yumcache /sbin/yumcache
 VOLUME /var/cache/yumcache
 
