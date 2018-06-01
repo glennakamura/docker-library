@@ -37,8 +37,8 @@ build_dependencies+=(
 )
 
 build_git () {
-  local uri=https://kojipkgs.fedoraproject.org/packages/git/2.16.2/1.fc28/src
-  local pkg=git-2.16.2-1.fc28.src.rpm
+  local uri=https://kojipkgs.fedoraproject.org/packages/git/2.17.1/2.fc28/src
+  local pkg=git-2.17.1-2.fc28.src.rpm
   local spec=~/rpmbuild/SPECS/git.spec
   curl -L -R -O ${uri}/${pkg}
   rpm -i ${pkg}
