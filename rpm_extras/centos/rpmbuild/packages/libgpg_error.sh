@@ -7,8 +7,8 @@ build_dependencies+=(
 )
 
 build_libgpg_error () {
-  local uri=https://kojipkgs.fedoraproject.org/packages/libgpg-error/1.29/1.fc28/src
-  local pkg=libgpg-error-1.29-1.fc28.src.rpm
+  local uri=https://kojipkgs.fedoraproject.org/packages/libgpg-error/1.31/1.fc28/src
+  local pkg=libgpg-error-1.31-1.fc28.src.rpm
   local spec=~/rpmbuild/SPECS/libgpg-error.spec
   curl -L -R -O ${uri}/${pkg}
   rpm -i ${pkg}
