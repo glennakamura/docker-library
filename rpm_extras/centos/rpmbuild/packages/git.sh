@@ -37,11 +37,12 @@ build_dependencies+=(
 )
 
 build_git () {
-  local uri=https://kojipkgs.fedoraproject.org/packages/git/2.17.1/2.fc28/src
-  local pkg=git-2.17.1-2.fc28.src.rpm
+  local uri=https://kojipkgs.fedoraproject.org/packages/git/2.17.1/3.fc28/src
+  local pkg=git-2.17.1-3.fc28.src.rpm
   local spec=~/rpmbuild/SPECS/git.spec
   curl -L -R -O ${uri}/${pkg}
   rpm -i ${pkg}
+  build_centos6 && sed -i -e 's|^%make_build|make|' ${spec}
   sed -i -e 's|^make test|#make test|' ${spec}
   rpmbuild -bb ${spec}
   cp ~/rpmbuild/RPMS/x86_64/git-2.*.rpm \
