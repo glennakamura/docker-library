@@ -1,0 +1,16 @@
+56e3da0181495dd1d41ac1b5ff01e0e3bff20af9131dcdbb11b5c0158f7e78c6  alpine-minirootfs-3.5.0-x86_64.tar.gz
+6270cb5d4d79caa97ad7a48c4def181386420437c80836cefd95a9953cabcf93  alpine-minirootfs-3.5.0-x86.tar.gz
+fa17f25ded0b29d94d8cc2d9aabb6f737f4b987c42fe8a6d11e05cfe2c52a64c  alpine-minirootfs-3.5.1-x86_64.tar.gz
+f3c30e430224c69675a359c4da27452a5d524d83cf7649c4d7953fe7e022d05f  alpine-minirootfs-3.5.1-x86.tar.gz
+3ea31671888a364de43316f22c9ef9a0e37cba363e1c858d12f92e9af7f80662  alpine-minirootfs-3.5.2-x86_64.tar.gz
+9623f9118befaf1f2408ae58fe1165184df11aa72378d65c4af4de0b2e0060ad  alpine-minirootfs-3.5.2-x86.tar.gz
+7e7ac263eeed4ed2c79f5cc34db98540da370f76d2e20e3142de75f153bad5e0  alpine-minirootfs-3.6.0-x86_64.tar.gz
+a5a935f98f697f4d3e2cd5bb6b5174c6b29a5badf26501ae433dfd05c1770aea  alpine-minirootfs-3.6.0-x86.tar.gz
+31d63b139341a1c969a81c0cab82e9642cc6c892878b5903cc8047db1313fc73  alpine-minirootfs-3.6.1-x86_64.tar.gz
+f2d1feebca1a374ef5f7108d60f6dc5aa60df95208906d670f31564be9e02893  alpine-minirootfs-3.6.1-x86.tar.gz
+df4bf81fdafdc72b32ad455c23901935fdfe5815993612ba7a2df4bae79d97ca  alpine-minirootfs-3.6.2-x86_64.tar.gz
+12c54e61c52af1866c97d9e5bf892c3c3f357152ec099339f8780c46933394e8  alpine-minirootfs-3.6.2-x86.tar.gz
+17e8275545aca7a6eaf4e43759a091d33bd9eb9cf11805118773dc940c8b94ac  alpine-minirootfs-3.7.0-x86_64.tar.gz
+9f1e64416fcb8d35b309dae4202270cb0d1fc9be2caad95f42bc7f48d2ab000c  alpine-minirootfs-3.7.0-x86.tar.gz
+ae36d6ea2033131cfc649afa13d7271367c386e7a0dbd5b3d0671a2ede22a2f1  alpine-minirootfs-3.8.0-x86_64.tar.gz
+bffabf917e1e4ecc59933bebf46fbbaa29c4ebb4ee8593125af2749d7701449f  alpine-minirootfs-3.8.0-x86.tar.gz

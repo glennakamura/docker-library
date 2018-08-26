@@ -1,0 +1,27 @@
+FROM scratch
+
+ARG arch=x86_64
+ARG rootfs=rootfs.tar.gz
+
+ADD ${rootfs} /
+WORKDIR /tmp
+RUN apk --update add \
+    alpine-sdk \
+    bash \
+    bc \
+    cpio \
+    gettext-dev \
+    linux-headers \
+    ncurses-dev \
+    perl \
+    python \
+    rsync \
+    sed \
+    util-linux
+COPY buildroot .
+RUN ./root.sh
+
+USER build
+WORKDIR /home/build
+
+ENTRYPOINT ["/bin/bash"]
