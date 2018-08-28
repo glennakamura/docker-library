@@ -1,0 +1,11 @@
+ARG arch=x86_64
+FROM abuild-${arch}
+
+ARG arch
+
+WORKDIR /tmp
+COPY --chown=build:build buildroot.sh .
+RUN ./buildroot.sh && rm -f ./buildroot.sh
+WORKDIR /home/build
+
+ENTRYPOINT ["/bin/bash"]

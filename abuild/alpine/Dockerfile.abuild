@@ -18,8 +18,8 @@ RUN apk --update add \
     rsync \
     sed \
     util-linux
-COPY buildroot .
-RUN ./root.sh
+COPY setup.sh .
+RUN ./setup.sh && rm -f ./setup.sh
 
 USER build
 WORKDIR /home/build
