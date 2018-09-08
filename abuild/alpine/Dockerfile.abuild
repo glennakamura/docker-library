@@ -5,19 +5,7 @@ ARG rootfs=rootfs.tar.gz
 
 ADD ${rootfs} /
 WORKDIR /tmp
-RUN apk --update add \
-    alpine-sdk \
-    bash \
-    bc \
-    cpio \
-    gettext-dev \
-    linux-headers \
-    ncurses-dev \
-    perl \
-    python \
-    rsync \
-    sed \
-    util-linux
+RUN apk update && apk add alpine-sdk bash
 COPY setup.sh .
 RUN ./setup.sh && rm -f ./setup.sh
 
