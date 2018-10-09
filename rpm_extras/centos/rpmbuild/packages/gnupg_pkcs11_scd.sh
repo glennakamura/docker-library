@@ -1,13 +1,12 @@
 #!/bin/bash
-build_package_dependencies libassuan
-build_package gnupg_pkcs11_scd || return 0
+source_dependencies libassuan
+add_rpmbuild_tasks build_gnupg_pkcs11_scd
 
-build_dependencies+=(
-  ${centos7:+libassuan-devel}
-  libgcrypt-devel
-  openssl-devel
+add_packages \
+  ${centos7:+libassuan-devel} \
+  libgcrypt-devel \
+  openssl-devel \
   pkcs11-helper-devel
-)
 
 build_gnupg_pkcs11_scd () {
   local uri=https://kojipkgs.fedoraproject.org/packages/gnupg-pkcs11-scd/0.9.1/3.fc28/src

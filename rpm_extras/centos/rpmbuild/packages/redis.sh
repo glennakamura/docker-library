@@ -1,10 +1,9 @@
 #!/bin/bash
-build_package redis || return 0
+add_rpmbuild_tasks build_redis
 
-build_dependencies+=(
-  jemalloc-devel
+add_packages \
+  jemalloc-devel \
   pandoc
-)
 
 build_redis () {
   local uri=https://kojipkgs.fedoraproject.org/packages/redis/4.0.11/1.fc28/src

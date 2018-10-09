@@ -1,40 +1,39 @@
 #!/bin/bash
-build_package git || return 0
+add_rpmbuild_tasks build_git
 
-build_dependencies+=(
-  ${centos6:+acl}
-  asciidoc
-  ${centos7:+bash-completion}
-  ${centos7:+cvs}
-  cvsps
-  desktop-file-utils
-  emacs
-  expat-devel
-  highlight
-  httpd
-  libcurl-devel
-  ${centos7:+libsecret-devel}
-  mod_dav_svn
-  openssl-devel
-  pcre2-devel
-  perl-CGI
-  perl-DBD-SQLite
-  ${centos7:+perl-Digest-MD5}
-  perl-ExtUtils-MakeMaker
-  ${centos7:+perl-HTTP-Date}
-  perl-IO-Tty
-  perl-MailTools
-  ${centos6:+perl-Test-Harness}
-  perl-Test-Simple
-  ${centos6:+perl-Time-HiRes}
-  python2-devel
-  subversion-perl
-  tcl
-  time
-  tk
-  xmlto
+add_packages \
+  ${centos6:+acl} \
+  asciidoc \
+  ${centos7:+bash-completion} \
+  ${centos7:+cvs} \
+  cvsps \
+  desktop-file-utils \
+  emacs \
+  expat-devel \
+  highlight \
+  httpd \
+  libcurl-devel \
+  ${centos7:+libsecret-devel} \
+  mod_dav_svn \
+  openssl-devel \
+  pcre2-devel \
+  perl-CGI \
+  perl-DBD-SQLite \
+  ${centos7:+perl-Digest-MD5} \
+  perl-ExtUtils-MakeMaker \
+  ${centos7:+perl-HTTP-Date} \
+  perl-IO-Tty \
+  perl-MailTools \
+  ${centos6:+perl-Test-Harness} \
+  perl-Test-Simple \
+  ${centos6:+perl-Time-HiRes} \
+  python2-devel \
+  subversion-perl \
+  tcl \
+  time \
+  tk \
+  xmlto \
   zlib-devel
-)
 
 build_git () {
   local uri=https://kojipkgs.fedoraproject.org/packages/git/2.17.1/3.fc28/src

@@ -1,11 +1,10 @@
 #!/bin/bash
-build_package tmux || return 0
+add_rpmbuild_tasks build_tmux
 
-build_dependencies+=(
-  libevent${centos6:+2}-devel
-  libutempter-devel
+add_packages \
+  libevent${centos6:+2}-devel \
+  libutempter-devel \
   ncurses-devel
-)
 
 build_tmux () {
   local uri=https://kojipkgs.fedoraproject.org/packages/tmux/2.7/1.fc28/src

@@ -1,10 +1,9 @@
 #!/bin/bash
 build_centos6 || return 0
-build_package libgpg_error || return 0
+add_rpmbuild_tasks build_libgpg_error
 
-build_dependencies+=(
+add_packages \
   texinfo
-)
 
 build_libgpg_error () {
   local uri=https://kojipkgs.fedoraproject.org/packages/libgpg-error/1.31/1.fc28/src
