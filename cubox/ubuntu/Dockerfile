@@ -1,0 +1,20 @@
+FROM ubuntu:bionic
+
+WORKDIR /tmp
+RUN apt-get update && apt-get install -y \
+  bc \
+  bison \
+  build-essential \
+  curl \
+  flex \
+  gcc-arm-linux-gnueabihf \
+  git \
+  kmod \
+  libssl-dev \
+  lzop \
+  ncurses-dev
+RUN useradd -m cubox
+
+USER cubox
+COPY build.sh .
+RUN ./build.sh
