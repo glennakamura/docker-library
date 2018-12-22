@@ -22,3 +22,5 @@ ae36d6ea2033131cfc649afa13d7271367c386e7a0dbd5b3d0671a2ede22a2f1  alpine-miniroo
 bffabf917e1e4ecc59933bebf46fbbaa29c4ebb4ee8593125af2749d7701449f  alpine-minirootfs-3.8.0-x86.tar.gz
 ad753d802048fa902e4d8b35cc53656de8ed0e6d082246089a11a86014b0f1a5  alpine-minirootfs-3.8.1-x86_64.tar.gz
 d912ebc81b00c7d896c8fcbb98cc70b045c965a74f4b5814301093374a07bb56  alpine-minirootfs-3.8.1-x86.tar.gz
+349d708d67ccbc22ffedc9eb87be539dbb64c4524756c0964187cb6a1aae27ac  alpine-minirootfs-3.8.2-x86_64.tar.gz
+8c32d95f64fe2415b801c26891330c10ec22152cd913ef914f336a782727c394  alpine-minirootfs-3.8.2-x86.tar.gz
