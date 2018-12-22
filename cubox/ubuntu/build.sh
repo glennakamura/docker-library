@@ -1,6 +1,6 @@
 #!/bin/bash
 UBOOT_VERSION=v2018.11
-KERNEL_VERSION=4.19.9
+KERNEL_VERSION=4.19.12
 umask 022
 mkdir -p cubox/root/boot
 cd cubox
@@ -8,9 +8,9 @@ cd cubox
 # compile u-boot
 export ARCH=arm
 export CROSS_COMPILE=arm-linux-gnueabihf-
-git clone git://git.denx.de/u-boot.git
+git clone --depth 1 --branch ${UBOOT_VERSION} \
+  git://git.denx.de/u-boot.git
 cd u-boot
-git checkout ${UBOOT_VERSION}
 make mx6cuboxi_defconfig
 make
 cd ..
@@ -23,10 +23,8 @@ curl -L -R -O \
 tar xJf linux-${KERNEL_VERSION}.tar.xz
 cd linux-${KERNEL_VERSION}
 make imx_v6_v7_defconfig
-make zImage
+make -j8 zImage modules dtbs
 make zinstall
-make modules
 make modules_install
-make dtbs
 make dtbs_install
 cd ..
