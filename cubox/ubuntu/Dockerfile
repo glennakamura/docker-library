@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
   bison \
   build-essential \
   curl \
+  device-tree-compiler \
   flex \
   gcc-arm-linux-gnueabihf \
   git \
