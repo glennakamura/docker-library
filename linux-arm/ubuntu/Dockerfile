@@ -14,8 +14,9 @@ RUN apt-get update && apt-get install -y \
   libssl-dev \
   lzop \
   ncurses-dev
-RUN useradd -m odroid
+ARG target=cubox
+RUN useradd -m ${target}
 
-USER odroid
-COPY build.sh .
+USER ${target}
+COPY ${target} .
 RUN ./build.sh
