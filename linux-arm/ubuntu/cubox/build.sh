@@ -22,6 +22,7 @@ curl -L -R -O \
   https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-${KERNEL_VERSION}.tar.xz
 tar xJf linux-${KERNEL_VERSION}.tar.xz
 cd linux-${KERNEL_VERSION}
+cat ../../kernel-*.patch | patch -p1
 make imx_v6_v7_defconfig
 make -j8 zImage modules dtbs
 make zinstall
