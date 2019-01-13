@@ -1,6 +1,6 @@
 #!/bin/bash
 UBOOT_VERSION=v2018.11
-KERNEL_VERSION=4.19.13
+KERNEL_VERSION=4.19.14
 umask 022
 mkdir -p cubox/root/boot
 cd cubox
