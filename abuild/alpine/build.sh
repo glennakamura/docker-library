@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-latest=3.8.2
+latest=3.9.0
 version=${latest}
 arch=x86_64
 for argument in "$@"; do
