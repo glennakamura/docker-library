@@ -12,19 +12,7 @@ git clone --depth 1 --branch ${UBOOT_VERSION} \
   https://github.com/hardkernel/u-boot.git
 cd u-boot
 rm -rf .git
-cat <<EOF | patch -p1
---- a/include/configs/odroid_xu4.h
-+++ b/include/configs/odroid_xu4.h
-@@ -243,7 +243,7 @@
- 	"copy_uboot_emmc2sd="UBOOT_COPY_EMMC2SD
- 
- #undef CONFIG_BOOTCOMMAND
--#define CONFIG_BOOTCOMMAND "cfgload;movi r k 0 40008000;bootz 40008000"
-+#define CONFIG_BOOTCOMMAND "cfgload;run distro_bootcmd;movi r k 0 40008000;bootz 40008000"
- 
- #undef CONFIG_BOOTARGS
- /* Android Default bootargs */
-EOF
+cat ../../u-boot-*.patch | patch -p1
 make odroid-xu4_defconfig
 make
 cd ..
