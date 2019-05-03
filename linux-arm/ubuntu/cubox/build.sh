@@ -1,5 +1,5 @@
 #!/bin/bash
-UBOOT_VERSION=v2019.01
+UBOOT_VERSION=v2019.04
 KERNEL_VERSION=4.19.38
 umask 022
 mkdir -p cubox/root/boot
